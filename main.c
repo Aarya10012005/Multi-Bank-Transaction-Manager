@@ -48,8 +48,10 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 3:
-                minTxn(&banks, numberOfFiles, argv);
-                maxTxn(&banks, numberOfFiles, argv);
+                {
+                    minTxn(&banks, numberOfFiles, argv);
+                    maxTxn(&banks, numberOfFiles, argv);
+                }
                 break;
 
             default:

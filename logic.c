@@ -527,7 +527,7 @@ void generate_txn_count_graph(tree *banks, int numberOfFiles) {
     }
 
     // Open a pipe to Gnuplot
-    FILE *gp = _popen("gnuplot -persistent", "w");
+    FILE *gp = popen("gnuplot -persistent", "w");
     if (!gp) {
         printf("Error: Could not open Gnuplot.\n");
         return;
@@ -554,7 +554,7 @@ void generate_txn_count_graph(tree *banks, int numberOfFiles) {
     fprintf(gp, "e\n"); // End of data
 
     // Close the pipe
-    _pclose(gp);
+    pclose(gp);
 
     printf("Graph saved as 'transaction_counts.png'.\n");
 }
@@ -569,7 +569,7 @@ void plot_avg_credit_debit(tree *banks, int numberOfFiles) {
         avg_credit[q - 1] = avg_quarterly_cred(banks, numberOfFiles, q);
     }
 
-    FILE *gp = _popen("gnuplot -persistent", "w");
+    FILE *gp = popen("gnuplot -persistent", "w");
     if (!gp) {
         printf("Error: Could not open Gnuplot.\n");
         return;
@@ -597,13 +597,13 @@ void plot_avg_credit_debit(tree *banks, int numberOfFiles) {
     }
     fprintf(gp, "e\n");
 
-    _pclose(gp);
+    pclose(gp);
 
     printf("Graph saved as './Graphs/avg_credit_debit.png'\n");
 }
 
 
-int *minTxn(tree *banks, int numberOfFiles, char *argv[]) {
+void minTxn(tree *banks, int numberOfFiles, char *argv[]) {
     int min_cred = INT_MAX;
     int min_deb = INT_MAX;
 
@@ -686,9 +686,9 @@ int *minTxn(tree *banks, int numberOfFiles, char *argv[]) {
                 }
             }
             if (flag) {
-                fclose(fp);
                 break;
             }
+            fclose(fp);
         }
     }
 
@@ -721,28 +721,26 @@ int *minTxn(tree *banks, int numberOfFiles, char *argv[]) {
                 }
             }
             if (flag) {
-                fclose(fp);
                 break;
             }
+            fclose(fp);
         }
     }
 
 
-    min_store[0] = min_cred;
-    min_store[1] = min_deb;
-
-    return min_store;
+    free(min_store);
+    return;
 }
 
-int *maxTxn(tree *banks, int numberOfFiles, char *argv[]) {
+void maxTxn(tree *banks, int numberOfFiles, char *argv[]) {
     int max_cred = -1;
     int max_deb = -1;
 
     char max_cred_srl[10] = "";
     char max_deb_srl[10] = "";
 
-    char max_cred_bank[BANKNAME] = "";
-    char max_deb_bank[BANKNAME] = "";
+    char max_cred_bank[BANK_NAME] = "";
+    char max_deb_bank[BANK_NAME] = "";
 
     char max_cred_line[BUFFER] = "";
     char max_deb_line[BUFFER] = "";
@@ -818,9 +816,9 @@ int *maxTxn(tree *banks, int numberOfFiles, char *argv[]) {
                 }
             }
             if (flag) {
-                fclose(fp);
                 break;
             }
+            fclose(fp);
         }
     }
 
@@ -853,16 +851,14 @@ int *maxTxn(tree *banks, int numberOfFiles, char *argv[]) {
                 }
             }
             if (flag) {
-                fclose(fp);
                 break;
             }
+            fclose(fp);
         }
     }
 
-    max_store[0] = max_cred;
-    max_store[1] = max_deb;
-
-    return max_store;
+    free(max_store);
+    return;
 }
 
 void search_transactions(tree *bank, int numberOfFiles, char **fileNames) {
