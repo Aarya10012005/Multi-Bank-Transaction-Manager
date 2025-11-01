@@ -36,7 +36,7 @@ Managing multiple bank accounts can be tedious, especially when analyzing transa
    gcc -Wall main.c logic.c list.c -o multi_bank
 
 3. **Prepare Input Files**  
-   Place the bank statement files (CSV format) in the working directory. Ensure the files are formatted correctly, with columns such as:
+   Place the bank statement files (CSV format) in a "bank_statements" directory. Ensure the files are formatted correctly, with columns such as:
 
    - Serial Number
    - Transaction Date
@@ -46,10 +46,12 @@ Managing multiple bank accounts can be tedious, especially when analyzing transa
    - Amount
    - Balance
 
-4. **Run the Application**  
+4. Prepare a "Graphs" directory in your main directory. The graphs will get saved in this directory if the user wishes to download graphs.
+
+5. **Run the Application**  
    Execute the program with the following command, passing your bank statement files (in CSV format) as arguments:
    ```bash
-   ./multi_bank <file1.csv> <file2.csv> ...
+   ./multi_bank ./bank_statements/<file1.csv> ./bank_statements/<file2.csv> ...
 
 ---
 
